@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Results</title>
+</head>
+<body>
+    <h1>Books</h1>
+    <table>
+      {% for item in results %}
+        <tr>
+          <td>
+            {{item.title}} {{item.author.fullname}}
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+</body>
+</html>

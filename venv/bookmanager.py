@@ -10,55 +10,75 @@ from flask_sqlalchemy import SQLAlchemy
 
 
 project_dir = os.path.dirname(os.path.abspath(__file__))
-database_file = "sqlite:///{}".format(os.path.join(project_dir, "bookdatabase.db"))
+database_file = "sqlite:///{}".format(os.path.join(project_dir, "OPDB.db"))
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = database_file
 
 db = SQLAlchemy(app)
 
-class Author(db.Model):
-    fullname = db.Column(db.String(200), unique=True, nullable=False, primary_key=False)
+
+class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    books = db.relationship('Book', backref='author', lazy=True, cascade="all, delete-orphan")
+    mail = db.Column(db.String(200), nullable=False, unique=True)
+    items = db.relationship('Item', backref='user', lazy=True)
+
+class Item(db.Model):
+    id =  db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(200), nullable=False)
+    barcode = db.Column(db.String(50), nullable=False, unique=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
+    type = db.Column(db.String(50))
+
     def __repr__(self):
-        return "<Name: {} Id: {} Books: {} >".format(self.fullname, self.id, self.books)
+        return "<Name: {} type: {} barcode: {} >".format(self.name, self.type, self.barcode)
 
-class Book(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(80), unique=True, nullable=False)
-    author_id = db.Column(db.Integer, db.ForeignKey('author.id'), nullable=False)
-    def __repr__(self):
-        return "<Title: {}>".format(self.title)
+    __mapper_args__ = {
+        'polymorphic_on': type,
+        'polymorphic_identity': 'item'
+    }
 
-def get_or_create_author(fullname):
-    author = db.session.query(Author).filter_by(fullname=fullname).first()
-    if author:
-        return author
-    else:
-        author = Author(fullname=fullname)
-        db.session.add(author)
-        db.session.commit()
-        return author
+class TechItem(Item):
+    subject = db.Column(db.String(100))
 
+    __mapper_args__ = {
+        'polymorphic_identity': 'tech'
+    }
+
+class LeisureItem(Item):
+    subtype = db.Column(db.String(50))
+
+    __mapper_args__ = {
+        'polymorphic_identity': 'leisure'
+    }
 
 @app.route("/", methods=["GET", "POST"])
 def home():
     if request.form:
         try:
-            author = get_or_create_author(fullname=request.form.get("author"))
-            print(author)
-            book = Book(title=request.form.get("title"), author_id=author.id)
-            author.books = author.books + book
-            print(book)
-            db.session.add(book)
-            db.session.commit()
+            print(request.form)
+            type = request.form.get("type")
+            name = request.form.get("title")
+            tech = request.form.get("tech")
+            subtype = request.form.get("subtype")
+            barcode = request.form.get("barcode")
+            item = None
+            if not type or not name or not barcode:
+                raise Exception("Missing fields in form")
+            if (type == "leisure"):
+                if not subtype:
+                    raise Exception("Missing fields in form")
+                item = LeisureItem(name=name, barcode=barcode, type=type, subtype=subtype)
+            else:
+                if not tech:
+                    raise Exception("Missing fields in form")
+                item = TechItem(name=name, barcode=barcode, type=type, subject=tech)
+            print(item)
         except Exception as e:
             print("Failed to add book")
             print(e)
-    books = Book.query.all()
-    authors = Author.query.all()
-    return render_template("home.html", books=books, authors=authors)
+    items = Item.query.all()
+    return render_template("home.html", items=items)
 
 
 @app.route("/search")

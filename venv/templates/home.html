@@ -1,42 +1,58 @@
 <html>
+    <script language="javascript">
+
+        function hola() {
+            var techField = document.getElementById("techfield");
+            var subTypeField = document.getElementById("subtypefield");
+            var mselect  =  document.getElementById("typeselect");
+            var mselectvalue = mselect.options[mselect.selectedIndex].value;
+            if(mselectvalue == "leisure") {
+                subTypeField.style.display = "inline";
+                techField.style.display = "none";
+            } else {
+                subTypeField.style.display = "none";
+                techField.style.display = "inline";
+            }
+        }
+    </script>
+
   <body>
-    <h1>Add book</h1>
+    <h1>Ajouter un produit</h1>
     <form method="POST" action="/">
-        <input type="text" name="title" placeholder="Title">
-        <input type="text" name="author" placeholder="Author">
-        <input type="submit" value="Add">
+        <input type="text" name="title" placeholder="Titre">
+        <select onchange="hola();" name="type" id="typeselect">
+          <option value="leisure">Loisir</option>
+          <option value="tech">Technique</option>
+        </select>
+        <input type="text" name="tech" placeholder="Technologie" id="techfield" style="display : none">
+        <select id="subtypefield" name="subtype" style="display : inline">
+            <option value="dvd">DVD</option>
+            <option value="manga">Manga</option>
+            <option value="bd">BD</option>
+        </select>
+        <input type="text" name="barcode" placeholder="Code barre">
+        <input type="submit" value="Ajouter">
     </form>
 
-    <h1>Books</h1>
+    <h1>Produits</h1>
     <table>
-      {% for book in books %}
+      {% for item in items %}
         <tr>
           <td>
-            {{book.title}} {{book.author.fullname}}
+            {{item.name}} {{item.type}}
           </td>
           <td>
             <form method="POST" action="./update" style="display: inline">
-              <input type="hidden" value="{{book.title}}" name="oldtitle">
-              <input type="text" value="{{book.title}}" name="newtitle">
+              <input type="hidden" value="{{item.name}}" name="oldtitle">
+              <input type="text" value="{{item.name}}" name="newtitle">
               <input type="submit" value="Update">
             </form>
           </td>
           <td>
             <form method="POST" action="./delete" style="display: inline">
-              <input type="hidden" value="{{book.title}}" name="title">
+              <input type="hidden" value="{{item.name}}" name="title">
               <input type="submit" value="Delete">
             </form>
-          </td>
-        </tr>
-      {% endfor %}
-    </table>
-
-    <h1>Authors</h1>
-    <table>
-      {% for author in authors %}
-        <tr>
-          <td>
-            {{author.id}} {{author.fullname}}  | Books : {{author.books}}
           </td>
         </tr>
       {% endfor %}

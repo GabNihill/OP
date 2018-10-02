@@ -1,9 +1,13 @@
 import os
+import json
+import jsonpickle
 from flask import (
     Flask,
     render_template,
     request,
-    redirect
+    redirect,
+    jsonify,
+    Response
 )
 
 from flask_sqlalchemy import SQLAlchemy
@@ -47,6 +51,7 @@ class TechItem(Item):
         'polymorphic_identity': 'tech'
     }
 
+
 class LeisureItem(Item):
     subtype = db.Column(db.String(50))
 
@@ -54,79 +59,89 @@ class LeisureItem(Item):
         'polymorphic_identity': 'leisure'
     }
 
-@app.route("/", methods=["GET", "POST"])
+
+@app.route("/api", methods=["GET", "POST"])
 def home():
-    if request.form:
-        try:
-            print(request.form)
-            type = request.form.get("type")
-            name = request.form.get("title")
-            tech = request.form.get("tech")
-            subtype = request.form.get("subtype")
-            barcode = request.form.get("barcode")
-            item = None
-            if not type or not name or not barcode:
-                raise Exception("Missing fields in form")
-            if (type == "leisure"):
-                if not subtype:
-                    raise Exception("Missing fields in form")
-                item = LeisureItem(name=name, barcode=barcode, type=type, subtype=subtype)
-            else:
-                if not tech:
-                    raise Exception("Missing fields in form")
-                item = TechItem(name=name, barcode=barcode, type=type, subject=tech)
-            print(item)
-            db.session.add(item)
-            db.session.commit()
-        except Exception as e:
-            print("Failed to add book")
-            print(e)
     items = Item.query.all()
     return render_template("home.html", items=items)
 
 
-@app.route("/search")
-def search():
-    return render_template("search.html", results=[])
+@app.route("/api/create", methods=["POST"])
+def create():
+    try:
+        type = request.get_json()["type"]
+        name = request.get_json()["title"]
+        tech = request.get_json()["tech"]
+        subtype = request.get_json()["subtype"]
+        barcode = request.get_json()["barcode"]
+        item = None
+        if not type or not name or not barcode:
+            raise Exception("Missing fields in form")
+        if (type == "leisure"):
+            if not subtype:
+                raise Exception("Missing fields in form")
+            item = LeisureItem(name=name, barcode=barcode, type=type, subtype=subtype)
+        else:
+            if not tech:
+                raise Exception("Missing fields in form")
+            item = TechItem(name=name, barcode=barcode, type=type, subject=tech)
+        print(item)
+        db.session.add(item)
+        db.session.commit()
+        return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+    except Exception as e:
+        print("Failed to add book")
+        print(e)
+        return json.dumps({'success': False}), 500, {'ContentType': 'application/json'}
+    
 
-@app.route("/results")
+@app.route("/api/search")
 def results():
     if request.args['searchInput']:
-        print(request.args['searchInput'])
         try:
             results = db.session.query(Item).filter(or_(Item.name.contains(request.args['searchInput']),
                                                         TechItem.subject.contains(request.args['searchInput']),
                                                         LeisureItem.subtype.contains(request.args['searchInput']),
-                                                        Item.barcode.contains(request.args['searchInput'])))
-            print(results)
-            return render_template("searchResults.html", results=results)
+                                                        Item.barcode.contains(request.args['searchInput']))).all()
+            response = Response(jsonpickle.encode(results))
+            response.headers['content-type'] = 'application/json'
+            return response
+            #return render_template("searchResults.html", results=results)
         except Exception as e:
             print("Failed to search items")
             print(e)
 
 
 
-@app.route("/update", methods=["POST"])
+@app.route("/api/update", methods=["POST"])
 def update():
     try:
-        newtitle = request.form.get("newtitle")
-        barcode = request.form.get("barcode")
+        newtitle = request.get_json()["newtitle"]
+        barcode = request.get_json()["barcode"]
         item = Item.query.filter_by(barcode=barcode).first()
         item.name = newtitle
         db.session.commit()
+        return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
     except Exception as e:
         print("Couldn't update item title")
         print(e)
-    return redirect("/")
+        return json.dumps({'success': False}), 500, {'ContentType': 'application/json'}
+    #return redirect("/")
 
 
-@app.route("/delete", methods=["POST"])
+@app.route("/api/delete", methods=["POST"])
 def delete():
-    barcode = request.form.get("barcode")
-    book = Item.query.filter_by(barcode=barcode).first()
-    db.session.delete(book)
-    db.session.commit()
-    return redirect("/")
+    try:
+        barcode = request.form.get("barcode")
+        book = Item.query.filter_by(barcode=barcode).first()
+        db.session.delete(book)
+        db.session.commit()
+        return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+    except Exception as e:
+        print("Couldn't delete item in database")
+        print(e)
+        return json.dumps({'success': False}), 500, {'ContentType': 'application/json'}
+    #return redirect("/")
 
 
 if __name__ == "__main__":

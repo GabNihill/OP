@@ -7,6 +7,7 @@ from flask import (
 )
 
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import or_
 
 
 project_dir = os.path.dirname(os.path.abspath(__file__))
@@ -29,6 +30,7 @@ class Item(db.Model):
     barcode = db.Column(db.String(50), nullable=False, unique=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
     type = db.Column(db.String(50))
+    date_borrow = db.Column(db.DateTime, nullable=True)
 
     def __repr__(self):
         return "<Name: {} type: {} barcode: {} >".format(self.name, self.type, self.barcode)
@@ -74,6 +76,8 @@ def home():
                     raise Exception("Missing fields in form")
                 item = TechItem(name=name, barcode=barcode, type=type, subject=tech)
             print(item)
+            db.session.add(item)
+            db.session.commit()
         except Exception as e:
             print("Failed to add book")
             print(e)
@@ -90,7 +94,10 @@ def results():
     if request.args['searchInput']:
         print(request.args['searchInput'])
         try:
-            results = db.session.query(Book).filter(Book.title.contains(request.args['searchInput']))
+            results = db.session.query(Item).filter(or_(Item.name.contains(request.args['searchInput']),
+                                                        TechItem.subject.contains(request.args['searchInput']),
+                                                        LeisureItem.subtype.contains(request.args['searchInput']),
+                                                        Item.barcode.contains(request.args['searchInput'])))
             print(results)
             return render_template("searchResults.html", results=results)
         except Exception as e:
@@ -103,20 +110,20 @@ def results():
 def update():
     try:
         newtitle = request.form.get("newtitle")
-        oldtitle = request.form.get("oldtitle")
-        book = Book.query.filter_by(title=oldtitle).first()
-        book.title = newtitle
+        barcode = request.form.get("barcode")
+        item = Item.query.filter_by(barcode=barcode).first()
+        item.name = newtitle
         db.session.commit()
     except Exception as e:
-        print("Couldn't update book title")
+        print("Couldn't update item title")
         print(e)
     return redirect("/")
 
 
 @app.route("/delete", methods=["POST"])
 def delete():
-    title = request.form.get("title")
-    book = Book.query.filter_by(title=title).first()
+    barcode = request.form.get("barcode")
+    book = Item.query.filter_by(barcode=barcode).first()
     db.session.delete(book)
     db.session.commit()
     return redirect("/")

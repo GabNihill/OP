@@ -3,9 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="7c4b687f-01a6-4756-a713-e80bcbd3a212" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/bookdatabase.db" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/OPDB.db" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/venv/bookmanager.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/bookmanager.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/venv/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/venv/templates/home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/templates/searchResults.html" beforeDir="false" afterPath="$PROJECT_DIR$/venv/templates/searchResults.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -17,10 +18,12 @@
     <session id="1156086909">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
+          <entry key="project.closed" value="1" />
           <entry key="project.open.time.11" value="1" />
           <entry key="project.open.time.2" value="1" />
-          <entry key="project.open.time.3" value="1" />
-          <entry key="project.opened" value="3" />
+          <entry key="project.open.time.3" value="3" />
+          <entry key="project.open.time.4" value="1" />
+          <entry key="project.opened" value="6" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -37,43 +40,44 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="html" value="1107" />
-          <entry key="py" value="2345" />
+          <entry key="html" value="1260" />
+          <entry key="py" value="2643" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="HTML" value="1107" />
-          <entry key="Python" value="2345" />
+          <entry key="HTML" value="1260" />
+          <entry key="Python" value="2643" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/venv/bookmanager.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="29" column="76" lean-forward="true" selection-start-line="29" selection-start-column="76" selection-end-line="29" selection-end-column="76" />
+            <state relative-caret-position="-1232">
+              <caret line="32" column="36" selection-start-line="32" selection-start-column="36" selection-end-line="32" selection-end-column="36" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
-                <marker date="1538060437188" expanded="true" signature="388:568" ph="..." />
-                <marker date="1538060437188" expanded="true" signature="1364:1366" ph="..." />
-                <marker date="1538060437188" expanded="true" signature="2595:2990" ph="..." />
+                <marker date="1538472121850" expanded="true" signature="415:595" ph="..." />
+                <marker date="1538472121850" expanded="true" signature="1447:1449" ph="..." />
+                <marker date="1538472121850" expanded="true" signature="2743:3477" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/venv/templates/home.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="10" column="39" selection-start-line="10" selection-start-column="39" selection-end-line="10" selection-end-column="39" />
+            <state relative-caret-position="298">
+              <caret line="52" column="75" lean-forward="true" selection-start-line="52" selection-start-column="75" selection-end-line="52" selection-end-column="75" />
               <folding>
                 <element signature="n#style#0;n#input#1;n#form#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#select#1;n#form#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#form#0;n#td#1;n#tr#0;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#form#0;n#td#2;n#tr#0;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
             </state>
@@ -92,8 +96,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/venv/templates/searchResults.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="16" column="12" selection-start-line="16" selection-start-column="12" selection-end-line="16" selection-end-column="12" />
+            <state relative-caret-position="204">
+              <caret line="12" column="87" selection-start-line="12" selection-start-column="87" selection-end-line="12" selection-end-column="87" />
             </state>
           </provider>
         </entry>
@@ -113,10 +117,10 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/venv/templates/searchResults.html" />
         <option value="$PROJECT_DIR$/venv/templates/search.html" />
-        <option value="$PROJECT_DIR$/venv/templates/home.html" />
+        <option value="$PROJECT_DIR$/venv/templates/searchResults.html" />
         <option value="$PROJECT_DIR$/venv/bookmanager.py" />
+        <option value="$PROJECT_DIR$/venv/templates/home.html" />
       </list>
     </option>
   </component>
@@ -132,6 +136,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -154,7 +159,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -264,10 +268,16 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/venv/templates/searchResults.html">
+    <entry file="file://$PROJECT_DIR$/venv/bookmanager.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="16" column="12" selection-start-line="16" selection-start-column="12" selection-end-line="16" selection-end-column="12" />
+        <state relative-caret-position="-1232">
+          <caret line="32" column="36" selection-start-line="32" selection-start-column="36" selection-end-line="32" selection-end-column="36" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+            <marker date="1538472121850" expanded="true" signature="415:595" ph="..." />
+            <marker date="1538472121850" expanded="true" signature="1447:1449" ph="..." />
+            <marker date="1538472121850" expanded="true" signature="2743:3477" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -278,27 +288,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/venv/templates/home.html">
+    <entry file="file://$PROJECT_DIR$/venv/templates/searchResults.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="39" selection-start-line="10" selection-start-column="39" selection-end-line="10" selection-end-column="39" />
-          <folding>
-            <element signature="n#style#0;n#input#1;n#form#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#select#1;n#form#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#form#0;n#td#2;n#tr#0;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
+        <state relative-caret-position="204">
+          <caret line="12" column="87" selection-start-line="12" selection-start-column="87" selection-end-line="12" selection-end-column="87" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/venv/bookmanager.py">
+    <entry file="file://$PROJECT_DIR$/venv/templates/home.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="29" column="76" lean-forward="true" selection-start-line="29" selection-start-column="76" selection-end-line="29" selection-end-column="76" />
+        <state relative-caret-position="298">
+          <caret line="52" column="75" lean-forward="true" selection-start-line="52" selection-start-column="75" selection-end-line="52" selection-end-column="75" />
           <folding>
-            <element signature="e#0#9#0" expanded="true" />
-            <marker date="1538060437188" expanded="true" signature="388:568" ph="..." />
-            <marker date="1538060437188" expanded="true" signature="1364:1366" ph="..." />
-            <marker date="1538060437188" expanded="true" signature="2595:2990" ph="..." />
+            <element signature="n#style#0;n#input#1;n#form#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#select#1;n#form#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#form#0;n#td#1;n#tr#0;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#form#0;n#td#2;n#tr#0;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>

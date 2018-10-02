@@ -5,12 +5,12 @@
     <title>Results</title>
 </head>
 <body>
-    <h1>Books</h1>
+    <h1>Items</h1>
     <table>
       {% for item in results %}
         <tr>
           <td>
-            {{item.title}} {{item.author.fullname}}
+            {{item.name}} |  {{item.subtype}} {{item.subject}} | EAN : {{item.barcode}}
           </td>
         </tr>
       {% endfor %}
